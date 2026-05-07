@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Caveat:wght@400..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-fg: #1a1a1a;
+  --color-bg: #fffaf0;
+  --color-denim: #3b5b85;
+  --color-denim-light: #7a9bc1;
+  --color-coral: #ee7c5a;
+  --color-cream2: #fdf3df;
+  --color-dashed-line: #c9b890;
+  --color-muted: #5a5236;
+  --color-sage: #b9c9a8;
+  --color-rust: #c96442;
+  --color-indigo-brand: #4a5d8a;
+
+  --font-sans: 'Schibsted Grotesk', system-ui, sans-serif;
+  --font-display: 'Newsreader', Georgia, serif;
+  --font-hand: 'Caveat', cursive;
+
+  --radius-card: 18px;
+  --radius-card-lg: 24px;
+  --radius-card-xl: 32px;
+  --radius-pill: 9999px;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+}
