@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getProduct } from "@/lib/queries";
+import { safeJsonLd } from "@/lib/escape";
 import { ProductPageClient } from "./ProductPageClient";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -60,7 +61,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       {jsonLd && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
       )}
       <ProductPageClient initialProduct={product} slug={slug} />

@@ -101,6 +101,8 @@ export function ProductPageClient({ initialProduct, slug }: { initialProduct: Pr
               <button
                 key={i}
                 onClick={() => setThumb(i)}
+                aria-label={`Show ${["front", "back", "detail", "model"][i]} view`}
+                aria-pressed={thumb === i}
                 style={{
                   width: 100, borderRadius: 12, overflow: "hidden",
                   border: `2px solid ${thumb === i ? "#3b5b85" : "#1a1a1a"}`,
@@ -197,7 +199,12 @@ export function ProductPageClient({ initialProduct, slug }: { initialProduct: Pr
             >
               {isSold ? "Sold ✿" : adding ? "Redirecting…" : <>{`Add to Cart · $${product.price}`} <ArrowIcon color="#fffaf0" size={24} /></>}
             </button>
-            <button style={{ width: 52, background: "transparent", color: "#1a1a1a", border: "2px solid #1a1a1a", borderRadius: 9999, cursor: "pointer", fontSize: 18 }}>♡</button>
+            <button
+              aria-label="Add to wishlist"
+              style={{ width: 52, background: "transparent", color: "#1a1a1a", border: "2px solid #1a1a1a", borderRadius: 9999, cursor: "pointer", fontSize: 18 }}
+            >
+              <span aria-hidden="true">♡</span>
+            </button>
           </div>
 
           <div className="layout-info-boxes mt-1">

@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getProduct } from "@/lib/queries";
+import { urlFor } from "@/lib/sanity";
 
 export async function POST(req: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   try {
-    const { slug } = await req.json();
+    const body = await req.json().catch(() => null);
+    const slug = body && typeof body === "object" ? (body as { slug?: unknown }).slug : null;
 
-    if (!slug) {
-      return NextResponse.json({ error: "Product slug required" }, { status: 400 });
+    if (typeof slug !== "string" || slug.length === 0 || slug.length > 200) {
+      return NextResponse.json({ error: "Invalid product slug" }, { status: 400 });
     }
 
     const product = await getProduct(slug);
@@ -23,6 +25,19 @@ export async function POST(req: NextRequest) {
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
+    // Build the Stripe-facing image URL via the official Sanity image
+    // builder rather than hand-assembling CDN paths (the previous approach
+    // could break for non-jpg/png assets and double-encoded refs).
+    let primaryImage: string | undefined;
+    const firstPhoto = product.photos?.[0];
+    if (firstPhoto?.asset?._ref) {
+      try {
+        primaryImage = urlFor(firstPhoto).width(800).height(1000).url();
+      } catch {
+        primaryImage = undefined;
+      }
+    }
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -33,9 +48,7 @@ export async function POST(req: NextRequest) {
             product_data: {
               name: product.title || "Donna Upcycles It Product",
               description: product.description?.slice(0, 500),
-              images: product.photos?.[0]?.asset?._ref
-                ? [`https://cdn.sanity.io/images/${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}/production/${product.photos[0].asset._ref.replace("image-", "").replace(/-([a-z]+)$/, ".$1")}`]
-                : [],
+              images: primaryImage ? [primaryImage] : [],
             },
             unit_amount: Math.round((product.price || 0) * 100),
           },
@@ -49,8 +62,8 @@ export async function POST(req: NextRequest) {
       shipping_address_collection: {
         allowed_countries: ["US", "CA", "GB", "AU"],
       },
-      success_url: `${siteUrl}/shop/${slug}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/shop/${slug}`,
+      success_url: `${siteUrl}/shop/${encodeURIComponent(slug)}/thank-you?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${siteUrl}/shop/${encodeURIComponent(slug)}`,
     });
 
     return NextResponse.json({ url: session.url });

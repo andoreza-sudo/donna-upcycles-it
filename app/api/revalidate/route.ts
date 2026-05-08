@@ -1,17 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 
-export async function POST(req: NextRequest) {
-  const secret = req.nextUrl.searchParams.get("secret");
+const SLUG_RE = /^[a-z0-9](?:[a-z0-9-]{0,80})$/i;
 
-  if (!secret || secret !== process.env.SANITY_REVALIDATE_SECRET) {
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i++) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
+export async function POST(req: NextRequest) {
+  const provided = req.nextUrl.searchParams.get("secret");
+  const expected = process.env.SANITY_REVALIDATE_SECRET;
+
+  if (!expected || !provided || !timingSafeEqual(provided, expected)) {
     return NextResponse.json({ error: "Invalid secret" }, { status: 401 });
   }
 
   try {
     const body = await req.json().catch(() => ({}));
-    const type: string = body._type;
-    const slug: string | undefined = body.slug?.current;
+    const type: string | undefined = body?._type;
+    const rawSlug: unknown = body?.slug?.current;
+    const slug = typeof rawSlug === "string" && SLUG_RE.test(rawSlug) ? rawSlug : null;
 
     if (type === "product") {
       revalidatePath("/");
@@ -26,11 +39,9 @@ export async function POST(req: NextRequest) {
       revalidatePath("/about");
       revalidatePath("/contact");
     } else {
-      // Unknown type — revalidate everything
       revalidatePath("/", "layout");
     }
 
-    // Always revalidate the sitemap
     revalidatePath("/sitemap.xml");
 
     return NextResponse.json({ revalidated: true, type, slug });

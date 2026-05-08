@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { safeJsonLd } from "@/lib/escape";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://donnaupcyclesit.com";
 
@@ -84,7 +85,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(orgJsonLd) }}
         />
         {children}
       </body>

@@ -4,6 +4,7 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { getJournalPost, getJournalPosts, getSiteSettings } from "@/lib/queries";
+import { safeJsonLd } from "@/lib/escape";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://donnaupcyclesit.com";
 
@@ -123,7 +124,7 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
 
   return (
     <div style={{ background: "#fffaf0", color: "#1a1a1a", fontFamily: "var(--font-sans)", minHeight: "100vh" }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <Nav donnaPhoto={settings?.donnaPhoto} />
 
       {/* BREADCRUMB */}
@@ -185,8 +186,18 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
         </div>
         <div className="flex gap-2 items-center text-sm">
           <span>share ✿</span>
-          {["ig", "pn", "↗"].map((s) => (
-            <button key={s} style={{ width: 36, height: 36, borderRadius: "50%", border: "1.5px solid #1a1a1a", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, cursor: "pointer" }}>{s}</button>
+          {[
+            ["ig", "Share to Instagram"],
+            ["pn", "Pin to Pinterest"],
+            ["↗", "Copy share link"],
+          ].map(([label, aria]) => (
+            <button
+              key={label}
+              aria-label={aria}
+              style={{ width: 36, height: 36, borderRadius: "50%", border: "1.5px solid #1a1a1a", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, cursor: "pointer" }}
+            >
+              <span aria-hidden="true">{label}</span>
+            </button>
           ))}
         </div>
       </div>
