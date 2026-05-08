@@ -29,3 +29,95 @@ body {
   color: var(--color-fg);
   font-family: var(--font-sans);
 }
+
+/* ============================================================
+   RESPONSIVE LAYOUT GRID UTILITIES
+   ============================================================ */
+
+/* Two-column asymmetric layouts */
+.layout-hero           { display: grid; grid-template-columns: 1.1fr 1fr;   gap: 3.5rem; align-items: center; position: relative; }
+.layout-two-col        { display: grid; grid-template-columns: 1.4fr 1fr;   gap: 3.5rem; align-items: end; position: relative; }
+.layout-two-col-center { display: grid; grid-template-columns: 1fr 1.2fr;   gap: 4rem;   align-items: center; }
+.layout-story          { display: grid; grid-template-columns: 1fr 1.3fr;   gap: 2.5rem; align-items: center; }
+.layout-contact        { display: grid; grid-template-columns: 1fr 1.1fr;   min-height: 720px; }
+.layout-cta            { display: grid; grid-template-columns: 1.2fr 1fr;   gap: 3rem;   align-items: center; }
+.layout-product-detail { display: grid; grid-template-columns: 1.15fr 1fr;  gap: 3.5rem; }
+.layout-journal-featured { display: grid; grid-template-columns: 1.1fr 1fr; gap: 3rem;   align-items: center; }
+.layout-newsletter     { display: grid; grid-template-columns: 1.2fr 1fr;   gap: 2.5rem; align-items: center; }
+
+/* Multi-column grids */
+.layout-journal-banner { display: grid; grid-template-columns: 1fr 1.4fr 0.9fr; align-items: stretch; }
+.layout-gallery        { display: grid; grid-template-columns: 100px 1fr; gap: 1.125rem; }
+.layout-values         { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.layout-info-boxes     { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+.layout-related-3      { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+.layout-related-4      { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+.layout-products-2     { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+.layout-products-3     { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+
+/* ============================================================
+   MOBILE OVERRIDES  (< 768px)
+   ============================================================ */
+@media (max-width: 767px) {
+
+  /* Stack all two-column layouts */
+  .layout-hero,
+  .layout-two-col,
+  .layout-two-col-center,
+  .layout-story,
+  .layout-contact,
+  .layout-cta,
+  .layout-product-detail,
+  .layout-journal-featured,
+  .layout-newsletter {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    min-height: auto;
+  }
+
+  /* Journal banner → single column */
+  .layout-journal-banner {
+    grid-template-columns: 1fr;
+  }
+  /* Remove side borders on stacked journal banner panels */
+  .layout-journal-banner > * {
+    border-right: none !important;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .layout-journal-banner > *:last-child {
+    border-bottom: none;
+  }
+
+  /* Gallery → horizontal thumbnail strip below main image */
+  .layout-gallery {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .layout-gallery-thumbs {
+    order: 2;
+    display: flex !important;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .layout-gallery-thumbs button {
+    width: 64px !important;
+    flex-shrink: 0;
+  }
+  .layout-gallery-main { order: 1; }
+
+  /* Multi-column → 2-col or 1-col */
+  .layout-values     { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .layout-info-boxes { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .layout-related-3  { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .layout-related-4  { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .layout-products-2 { grid-template-columns: 1fr;     gap: 1.5rem; }
+  .layout-products-3 { grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  /* Contact layout: right border → bottom border */
+  .layout-contact > *:first-child {
+    border-right: none !important;
+    border-bottom: 1px solid #1a1a1a;
+  }
+}

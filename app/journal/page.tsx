@@ -44,24 +44,24 @@ export default async function JournalPage({ searchParams }: { searchParams: Prom
       <Nav donnaPhoto={settings?.donnaPhoto} />
 
       {/* PAGE HEAD */}
-      <section className="px-14 pt-14 pb-8 relative" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 56, alignItems: "end", borderBottom: "1px solid #1a1a1a" }}>
+      <section className="layout-two-col px-4 md:px-14 pt-10 md:pt-14 pb-6 md:pb-8 relative" style={{ borderBottom: "1px solid #1a1a1a" }}>
         <div>
           <div style={{ fontFamily: "var(--font-hand)", fontSize: 28, color: "#ee7c5a", marginBottom: 8 }}>✿ from the workshop</div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: 110, lineHeight: 0.92, letterSpacing: -3, margin: 0 }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(3rem, 12vw, 6.875rem)", lineHeight: 0.92, letterSpacing: "-0.03em", margin: 0 }}>
             The <span style={{ fontStyle: "italic", color: "#3b5b85" }}>Journal</span>
           </h1>
         </div>
         <p style={{ fontSize: 16, lineHeight: 1.55, color: "#3a3528", maxWidth: 380, paddingBottom: 12 }}>
           Sewing tips, behind-the-scenes from the kitchen-table workshop, and a heads-up whenever new pieces drop. Posted whenever Donna&apos;s got a minute spare.
         </p>
-        <div className="absolute top-6 right-14 flex gap-1">
+        <div className="hidden md:flex absolute top-6 right-14 gap-1">
           <span style={{ transform: "rotate(-14deg)", display: "inline-block" }}><ButterflyIcon color="#3b5b85" accent="#ee7c5a" size={28} /></span>
           <span style={{ transform: "rotate(8deg) translateY(8px)", display: "inline-block" }}><ButterflyIcon color="#ee7c5a" accent="#3b5b85" size={22} /></span>
         </div>
       </section>
 
       {/* FILTER BAR */}
-      <section className="px-14 py-6 flex justify-between items-center flex-wrap gap-4 border-b border-[#1a1a1a]">
+      <section className="px-4 md:px-14 py-4 md:py-6 flex justify-between items-center flex-wrap gap-3 border-b border-[#1a1a1a]">
         <div className="flex gap-2 flex-wrap">
           {TAGS.map((t) => (
             <Link
@@ -69,26 +69,26 @@ export default async function JournalPage({ searchParams }: { searchParams: Prom
               href={t === "All" ? "/journal" : `/journal?tag=${encodeURIComponent(t)}`}
               className="no-underline"
               style={{
-                padding: "10px 18px", borderRadius: 9999,
+                padding: "8px 14px", borderRadius: 9999,
                 border: "1.5px solid #1a1a1a",
                 background: (t === "All" && !activeTag) || t === activeTag ? "#3b5b85" : "transparent",
                 color: (t === "All" && !activeTag) || t === activeTag ? "#fffaf0" : "#1a1a1a",
-                fontSize: 13, fontFamily: "inherit",
+                fontSize: 12, fontFamily: "inherit",
               }}
             >
               {t}
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-2" style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "#5a5236" }}>
-          {list.length} posts · newest first <ArrowIcon color="#5a5236" size={32} />
+        <div className="flex items-center gap-2" style={{ fontFamily: "var(--font-hand)", fontSize: 20, color: "#5a5236" }}>
+          {list.length} posts <ArrowIcon color="#5a5236" size={28} />
         </div>
       </section>
 
       {/* FEATURED */}
       {featured && (
-        <section className="px-14 py-14" style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 48, alignItems: "center" }}>
-          <div style={{ borderRadius: 24, overflow: "hidden", border: "2px solid #1a1a1a", position: "relative", transform: "rotate(-1deg)" }}>
+        <section className="layout-journal-featured px-4 md:px-14 py-10 md:py-14">
+          <div style={{ borderRadius: 24, overflow: "hidden", border: "2px solid #1a1a1a", position: "relative", transform: "rotate(-0.5deg)" }}>
             <img src={POST_IMAGES[0]} alt={featured.title} style={{ width: "100%", aspectRatio: "4/3", objectFit: "cover", display: "block" }} />
             <div style={{ position: "absolute", top: 16, left: 16, background: "#ee7c5a", color: "#fffaf0", padding: "6px 14px", borderRadius: 9999, fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", border: "2px solid #1a1a1a", fontWeight: 600 }}>Featured ✿</div>
           </div>
@@ -98,10 +98,10 @@ export default async function JournalPage({ searchParams }: { searchParams: Prom
               <span>{featured.publishedAt ? new Date(featured.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : ""}</span>
               {featured.readTime && <span>· {featured.readTime} min read</span>}
             </div>
-            <h2 style={{ fontFamily: "var(--font-display)", fontSize: 56, lineHeight: 1, letterSpacing: -1.4, margin: "0 0 18px" }}>{featured.title}</h2>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 6vw, 3.5rem)", lineHeight: 1, letterSpacing: -1.4, margin: "0 0 18px" }}>{featured.title}</h2>
             <p style={{ fontSize: 17, lineHeight: 1.55, marginBottom: 24, color: "#3a3528" }}>{featured.excerpt}</p>
-            <Link href={`/journal/${featured.slug?.current}`} className="inline-flex items-center gap-2 no-underline" style={{ background: "#1a1a1a", color: "#fffaf0", padding: "16px 26px", borderRadius: 9999, fontSize: 14, fontFamily: "inherit" }}>
-              Read the post <ArrowIcon color="#fffaf0" size={32} />
+            <Link href={`/journal/${featured.slug?.current}`} className="inline-flex items-center gap-2 no-underline" style={{ background: "#1a1a1a", color: "#fffaf0", padding: "14px 22px", borderRadius: 9999, fontSize: 14, fontFamily: "inherit" }}>
+              Read the post <ArrowIcon color="#fffaf0" size={28} />
             </Link>
           </div>
         </section>
@@ -109,12 +109,12 @@ export default async function JournalPage({ searchParams }: { searchParams: Prom
 
       {/* GRID */}
       {rest.length > 0 && (
-        <section className="px-14 pb-16 pt-8 border-t border-[#1a1a1a]">
-          <div className="flex justify-between items-baseline py-8">
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: 36, letterSpacing: -0.6, margin: 0 }}>More from the journal</h3>
-            <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "#ee7c5a" }}>{rest.length} more posts ✿</div>
+        <section className="px-4 md:px-14 pb-16 pt-8 border-t border-[#1a1a1a]">
+          <div className="flex justify-between items-baseline py-6 md:py-8">
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 4vw, 2.25rem)", letterSpacing: -0.6, margin: 0 }}>More from the journal</h3>
+            <div style={{ fontFamily: "var(--font-hand)", fontSize: 20, color: "#ee7c5a" }}>{rest.length} more ✿</div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 32 }}>
+          <div className="layout-related-3">
             {rest.map((p, i) => (
               <article key={p._id} className="flex flex-col cursor-pointer">
                 <div style={{ borderRadius: 18, overflow: "hidden", border: "2px solid #1a1a1a", marginBottom: 16, position: "relative" }}>
@@ -141,20 +141,20 @@ export default async function JournalPage({ searchParams }: { searchParams: Prom
       )}
 
       {/* NEWSLETTER */}
-      <section className="mx-14 mb-14 rounded-[32px] px-14 py-12 border-2 border-[#1a1a1a] relative overflow-hidden" style={{ background: "#3b5b85", color: "#fffaf0", display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 40, alignItems: "center" }}>
+      <section className="layout-newsletter mx-4 md:mx-14 mb-14 rounded-[32px] px-8 md:px-14 py-10 md:py-12 border-2 border-[#1a1a1a] relative overflow-hidden" style={{ background: "#3b5b85", color: "#fffaf0" }}>
         <div style={{ position: "absolute", top: -16, left: 40, background: "#fffaf0", color: "#1a1a1a", padding: "6px 14px", borderRadius: 9999, border: "2px solid #1a1a1a", fontFamily: "var(--font-hand)", fontSize: 20 }}>stay in the loop ✿</div>
         <div>
-          <h3 style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 44, lineHeight: 1, letterSpacing: -0.8, margin: "0 0 12px", color: "#fffaf0" }}>One email a month.<br />Sometimes two if there&apos;s a drop.</h3>
+          <h3 style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "clamp(1.75rem, 5vw, 2.75rem)", lineHeight: 1, letterSpacing: -0.8, margin: "0 0 12px", color: "#fffaf0" }}>One email a month.<br />Sometimes two if there&apos;s a drop.</h3>
           <p style={{ fontSize: 16, lineHeight: 1.5, opacity: 0.9, maxWidth: 460 }}>Sewing tips, new pieces, the occasional discount code. No spam, ever — Donna types these herself.</p>
         </div>
-        <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex gap-2 flex-wrap md:flex-nowrap" onSubmit={(e) => e.preventDefault()}>
           <input
             type="email"
             placeholder="your email…"
-            className="flex-1 rounded-full text-[15px] px-[18px] py-3 outline-none"
+            className="flex-1 min-w-0 rounded-full text-[15px] px-[18px] py-3 outline-none"
             style={{ border: "2px solid #fffaf0", background: "transparent", color: "#fffaf0", fontFamily: "inherit" }}
           />
-          <button type="submit" style={{ background: "#fffaf0", color: "#1a1a1a", border: "2px solid #fffaf0", padding: "14px 22px", borderRadius: 9999, fontSize: 14, cursor: "pointer", fontFamily: "inherit", fontWeight: 500 }}>Subscribe →</button>
+          <button type="submit" style={{ background: "#fffaf0", color: "#1a1a1a", border: "2px solid #fffaf0", padding: "14px 22px", borderRadius: 9999, fontSize: 14, cursor: "pointer", fontFamily: "inherit", fontWeight: 500, flexShrink: 0 }}>Subscribe →</button>
         </form>
       </section>
 

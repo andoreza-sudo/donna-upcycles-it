@@ -87,7 +87,7 @@ function ProductPageClient({ slug }: { slug: string }) {
       <Nav />
 
       {/* BREADCRUMB */}
-      <div className="px-14 py-5 flex gap-2 text-xs tracking-[1.5px] uppercase" style={{ color: "#5a5236" }}>
+      <div className="px-4 md:px-14 py-4 md:py-5 flex gap-2 text-xs tracking-[1.5px] uppercase" style={{ color: "#5a5236" }}>
         <Link href="/shop" style={{ color: "#5a5236", textDecoration: "none" }}>Shop</Link>
         <span>/</span>
         <span>{product.category}</span>
@@ -96,10 +96,12 @@ function ProductPageClient({ slug }: { slug: string }) {
       </div>
 
       {/* MAIN GRID */}
-      <div className="px-14 pb-14" style={{ display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 56 }}>
+      <div className="layout-product-detail px-4 md:px-14 pb-10 md:pb-14">
+
         {/* GALLERY */}
-        <div style={{ display: "grid", gridTemplateColumns: "100px 1fr", gap: 18 }}>
-          <div className="flex flex-col gap-3">
+        <div className="layout-gallery">
+          {/* Thumbnail strip */}
+          <div className="layout-gallery-thumbs flex-col gap-3">
             {[0, 1, 2, 3].map((i) => (
               <button
                 key={i}
@@ -118,7 +120,8 @@ function ProductPageClient({ slug }: { slug: string }) {
               </button>
             ))}
           </div>
-          <div style={{ borderRadius: 24, overflow: "hidden", border: "2px solid #1a1a1a", position: "relative", transform: "rotate(-0.5deg)" }}>
+          {/* Main image */}
+          <div className="layout-gallery-main" style={{ borderRadius: 24, overflow: "hidden", border: "2px solid #1a1a1a", position: "relative", transform: "rotate(-0.5deg)" }}>
             <img src={THUMB_IMAGES[thumb]} alt={product.title} style={{ width: "100%", aspectRatio: "4/5", objectFit: "cover", display: "block" }} />
             <div style={{ position: "absolute", top: 16, right: 16, width: 76, height: 76, borderRadius: "50%", background: "#ee7c5a", color: "#fffaf0", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-hand)", fontSize: 22, lineHeight: 1.05, textAlign: "center", transform: "rotate(12deg)", border: "2px solid #1a1a1a", zIndex: 2 }}>
               just<br />in!
@@ -130,13 +133,13 @@ function ProductPageClient({ slug }: { slug: string }) {
         </div>
 
         {/* INFO */}
-        <div className="flex flex-col gap-[18px]">
+        <div className="flex flex-col gap-4 md:gap-[18px]">
           <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "#ee7c5a" }}>{product.number}</div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: 56, lineHeight: 0.96, letterSpacing: -1.2, margin: 0 }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 400, fontSize: "clamp(2rem, 6vw, 3.5rem)", lineHeight: 0.96, letterSpacing: "-0.02em", margin: 0 }}>
             {product.title}
           </h1>
           <div className="flex items-baseline gap-3 mt-1">
-            <span style={{ fontFamily: "var(--font-display)", fontSize: 36 }}>${product.price}</span>
+            <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 4vw, 2.25rem)" }}>${product.price}</span>
             <span style={{ background: "#7a9bc1", color: "#1a1a1a", padding: "4px 12px", borderRadius: 9999, fontSize: 12, letterSpacing: 1.2, textTransform: "uppercase", fontWeight: 600 }}>One of one</span>
           </div>
 
@@ -182,7 +185,7 @@ function ProductPageClient({ slug }: { slug: string }) {
                   <div style={{ fontSize: 14, color: "#1a1a1a" }}>{product.sizingNote || product.size}</div>
                 </div>
               </div>
-              <span style={{ fontFamily: "var(--font-hand)", fontSize: 18, color: "#5a5236" }}>one of one — fits as is ✿</span>
+              <span style={{ fontFamily: "var(--font-hand)", fontSize: 16, color: "#5a5236" }}>one of one ✿</span>
             </div>
           )}
 
@@ -192,18 +195,18 @@ function ProductPageClient({ slug }: { slug: string }) {
               disabled={isSold || adding}
               style={{
                 flex: 1, background: isSold ? "#c9b890" : "#1a1a1a", color: "#fffaf0", border: "none",
-                padding: "18px 28px", borderRadius: 9999, fontSize: 15, fontWeight: 500,
+                padding: "18px 20px", borderRadius: 9999, fontSize: 15, fontWeight: 500,
                 cursor: isSold ? "not-allowed" : "pointer", fontFamily: "inherit",
-                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 10,
+                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
                 opacity: isSold ? 0.7 : 1,
               }}
             >
-              {isSold ? "Sold ✿" : adding ? "Redirecting…" : <>{`Add to Cart · $${product.price}`} <ArrowIcon color="#fffaf0" size={28} /></>}
+              {isSold ? "Sold ✿" : adding ? "Redirecting…" : <>{`Add to Cart · $${product.price}`} <ArrowIcon color="#fffaf0" size={24} /></>}
             </button>
-            <button style={{ width: 56, background: "transparent", color: "#1a1a1a", border: "2px solid #1a1a1a", borderRadius: 9999, cursor: "pointer", fontSize: 18 }}>♡</button>
+            <button style={{ width: 52, background: "transparent", color: "#1a1a1a", border: "2px solid #1a1a1a", borderRadius: 9999, cursor: "pointer", fontSize: 18 }}>♡</button>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginTop: 4 }}>
+          <div className="layout-info-boxes mt-1">
             {[["Shipping", "Free over $80 · 2-3 days"], ["Returns", "14 days · easy swap"], ["Made by", "Donna · Portland, OR"]].map(([k, v]) => (
               <div key={k} className="flex flex-col gap-1 p-3 rounded-[12px]" style={{ border: "1.5px solid #c9b890", fontSize: 12 }}>
                 <span style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#5a5236" }}>{k}</span>
@@ -212,7 +215,7 @@ function ProductPageClient({ slug }: { slug: string }) {
             ))}
           </div>
 
-          <div style={{ background: "#3b5b85", color: "#fffaf0", borderRadius: 18, padding: "20px 24px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, border: "2px solid #1a1a1a", marginTop: 4 }}>
+          <div style={{ background: "#3b5b85", color: "#fffaf0", borderRadius: 18, padding: "20px 24px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 16, border: "2px solid #1a1a1a", marginTop: 4 }}>
             <div>
               <div style={{ fontFamily: "var(--font-hand)", fontSize: 24, marginBottom: 2, color: "#fffaf0" }}>not quite right?</div>
               <p style={{ fontSize: 14, lineHeight: 1.4, opacity: 0.9, margin: 0 }}>Different size, longer hem, your dad&apos;s old jeans? Donna takes custom orders.</p>
@@ -226,15 +229,15 @@ function ProductPageClient({ slug }: { slug: string }) {
 
       {/* RELATED */}
       {related.length > 0 && (
-        <section className="px-14 pb-16">
+        <section className="px-4 md:px-14 pb-16">
           <div className="flex justify-between items-baseline mb-6">
             <div>
               <div style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "#ee7c5a" }}>more in the shop ✿</div>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: 36, letterSpacing: -0.6, margin: 0 }}>You might also like</h3>
+              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 4vw, 2.25rem)", letterSpacing: -0.6, margin: 0 }}>You might also like</h3>
             </div>
-            <Link href="/shop" style={{ fontFamily: "var(--font-hand)", fontSize: 22, color: "#3b5b85", textDecoration: "underline", textDecorationStyle: "wavy" }}>see all pieces →</Link>
+            <Link href="/shop" style={{ fontFamily: "var(--font-hand)", fontSize: 20, color: "#3b5b85", textDecoration: "underline", textDecorationStyle: "wavy" }}>see all →</Link>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24 }}>
+          <div className="layout-related-4">
             {related.map((r: Product, i: number) => (
               <Link key={r._id} href={`/shop/${r.slug?.current}`} className="no-underline" style={{ cursor: "pointer", color: "inherit" }}>
                 <div style={{ borderRadius: 16, overflow: "hidden", border: "2px solid #1a1a1a", marginBottom: 12, position: "relative" }}>

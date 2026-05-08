@@ -45,11 +45,11 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
     <div style={{ background: "#fffaf0", color: "#1a1a1a", fontFamily: "var(--font-sans)", minHeight: "100vh" }}>
       <Nav donnaPhoto={settings?.donnaPhoto} />
 
-      <section className="px-14 pt-14 pb-8">
-        <div className="flex justify-between items-end flex-wrap gap-4 mb-9">
+      <section className="px-4 md:px-14 pt-10 md:pt-14 pb-8">
+        <div className="flex justify-between items-end flex-wrap gap-4 mb-6 md:mb-9">
           <div>
             <div style={{ fontFamily: "var(--font-hand)", fontSize: 26, color: "#ee7c5a" }}>shop the goods</div>
-            <h1 style={{ fontFamily: "var(--font-display)", fontSize: 64, lineHeight: 0.95, letterSpacing: -2, margin: "4px 0 0" }}>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.25rem, 8vw, 4rem)", lineHeight: 0.95, letterSpacing: -2, margin: "4px 0 0" }}>
               {category ? category : "Everything"} →
             </h1>
           </div>
@@ -60,12 +60,12 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
                 href={c === "All" ? "/shop" : `/shop?category=${c}`}
                 className="no-underline"
                 style={{
-                  padding: "12px 22px",
+                  padding: "10px 18px",
                   borderRadius: 9999,
                   border: "2px solid #1a1a1a",
                   background: (c === "All" && !category) || c === category ? "#3b5b85" : "#fffaf0",
                   color: (c === "All" && !category) || c === category ? "#fffaf0" : "#1a1a1a",
-                  fontSize: 14,
+                  fontSize: 13,
                   fontFamily: "inherit",
                   display: "inline-block",
                   transform: (c === "All" && !category) || c === category ? "rotate(-1deg)" : undefined,
@@ -82,9 +82,9 @@ export default async function ShopPage({ searchParams }: { searchParams: Promise
         </div>
       </section>
 
-      <section className="px-14 pb-20">
+      <section className="px-4 md:px-14 pb-20">
         {list.length > 0 ? (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 28 }}>
+          <div className="layout-products-3">
             {list.map((p, i) => (
               <Link key={p._id} href={`/shop/${p.slug?.current}`} className="no-underline" style={{ position: "relative", cursor: "pointer", color: "inherit" }}>
                 <div style={{ borderRadius: 18, overflow: "hidden", border: "2px solid #1a1a1a", position: "relative" }}>

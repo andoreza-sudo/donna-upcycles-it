@@ -46,9 +46,9 @@ export default function ContactPage() {
     return (
       <div style={{ background: "#fffaf0", color: "#1a1a1a", fontFamily: "var(--font-sans)", minHeight: "100vh" }}>
         <Nav />
-        <div className="flex flex-col items-center justify-center py-32 px-14 text-center">
+        <div className="flex flex-col items-center justify-center py-24 px-4 md:px-14 text-center">
           <div style={{ fontFamily: "var(--font-hand)", fontSize: 32, color: "#ee7c5a", marginBottom: 16 }}>message sent ✿</div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: 72, lineHeight: 0.95, letterSpacing: -2, margin: "0 0 24px" }}>Donna will be in touch!</h1>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 10vw, 4.5rem)", lineHeight: 0.95, letterSpacing: -2, margin: "0 0 24px" }}>Donna will be in touch!</h1>
           <p style={{ fontSize: 18, lineHeight: 1.6, maxWidth: 480, marginBottom: 32, color: "#3a3528" }}>
             She replies to every message herself, usually within a day or two. Custom orders take 3–4 weeks from agreed brief to your door.
           </p>
@@ -65,15 +65,15 @@ export default function ContactPage() {
     <div style={{ background: "#fffaf0", color: "#1a1a1a", fontFamily: "var(--font-sans)", minHeight: "100vh" }}>
       <Nav />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr", minHeight: 720 }}>
-        {/* LEFT */}
-        <div className="px-14 py-[72px] flex flex-col gap-6" style={{ borderRight: "1px solid #1a1a1a" }}>
+      <div className="layout-contact">
+        {/* LEFT — info */}
+        <div className="px-4 md:px-14 py-12 md:py-[72px] flex flex-col gap-6" style={{ borderRight: "1px solid #1a1a1a" }}>
           <div style={{ fontFamily: "var(--font-hand)", fontSize: 26, color: "#ee7c5a" }}>say hello ✿</div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: 80, lineHeight: 0.94, letterSpacing: -2, margin: 0 }}>Custom job?<br />Quick question?</h1>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem, 9vw, 5rem)", lineHeight: 0.94, letterSpacing: -2, margin: 0 }}>Custom job?<br />Quick question?</h1>
           <p style={{ fontSize: 16, lineHeight: 1.6, maxWidth: 480 }}>
             Donna replies to every email herself, usually within a day or two. Custom orders take 3–4 weeks from agreed brief to your door.
           </p>
-          <div className="flex flex-col gap-3 mt-3">
+          <div className="flex flex-col gap-3 mt-2">
             {[
               ["01", "Send your idea", "Sketches, references, a rough size — anything helps."],
               ["02", "We'll agree a price + timeline", "50% deposit to start, balance when it ships."],
@@ -90,8 +90,8 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* RIGHT — FORM */}
-        <form className="px-14 py-[72px] flex flex-col gap-[18px]" onSubmit={handleSubmit}>
+        {/* RIGHT — form */}
+        <form className="px-4 md:px-14 py-12 md:py-[72px] flex flex-col gap-[18px]" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-1.5">
             <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#4a4530" }}>What&apos;s this about?</div>
             <div className="flex gap-2 flex-wrap">
@@ -115,7 +115,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             {[["Your name", "Imogen Hart", name, setName, "text"], ["Email", "hello@…", email, setEmail, "email"]].map(([label, ph, val, setter, type]) => (
               <div key={label as string} className="flex-1 flex flex-col gap-1.5">
                 <div style={{ fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "#4a4530" }}>{label as string}</div>
