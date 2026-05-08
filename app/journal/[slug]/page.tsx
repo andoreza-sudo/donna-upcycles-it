@@ -1,8 +1,29 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { getJournalPost, getJournalPosts, getSiteSettings } from "@/lib/queries";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://donnaupcyclesit.com";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getJournalPost(slug).catch(() => null);
+  if (!post) return { title: "Post not found" };
+  return {
+    title: post.title as string,
+    description: (post.excerpt as string | undefined) || `A journal post by Donna — ${post.title}`,
+    openGraph: {
+      title: `${post.title} — Donna Upcycles It Journal`,
+      description: post.excerpt as string | undefined,
+      type: "article",
+      publishedTime: post.publishedAt as string | undefined,
+      authors: ["Donna"],
+      tags: post.tag ? [post.tag as string] : undefined,
+    },
+  };
+}
 
 const RELATED_IMAGES = [
   "https://picsum.photos/seed/jrel1/800/600",
@@ -84,8 +105,25 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
     );
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    author: { "@type": "Person", name: "Donna" },
+    publisher: {
+      "@type": "Organization",
+      name: "Donna Upcycles It",
+      url: SITE_URL,
+    },
+    datePublished: post.publishedAt,
+    url: `${SITE_URL}/journal/${post.slug?.current}`,
+    keywords: post.tag,
+  };
+
   return (
     <div style={{ background: "#fffaf0", color: "#1a1a1a", fontFamily: "var(--font-sans)", minHeight: "100vh" }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Nav donnaPhoto={settings?.donnaPhoto} />
 
       {/* BREADCRUMB */}

@@ -1,8 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ButterflyIcon } from "@/components/ButterflyIcon";
 import { getSiteSettings } from "@/lib/queries";
+
+export const metadata: Metadata = {
+  title: "Our Story",
+  description:
+    "Meet Donna — the one-woman studio behind every piece. Based in Portland, Oregon, she rescues old denim and turns it into something you'll keep forever.",
+  openGraph: {
+    title: "Our Story — Donna Upcycles It",
+    description:
+      "Meet Donna — the one-woman studio behind every piece. Based in Portland, Oregon.",
+  },
+};
 
 export default async function AboutPage() {
   const settings = await getSiteSettings().catch(() => null);

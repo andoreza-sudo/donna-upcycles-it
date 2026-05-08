@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { getProducts, getSiteSettings } from "@/lib/queries";
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ category?: string }> }): Promise<Metadata> {
+  const { category } = await searchParams;
+  const title = category ? `${category}` : "Shop";
+  const description = category
+    ? `Browse one-of-one upcycled denim ${category.toLowerCase()} handmade by Donna in Portland, Oregon.`
+    : "Browse all one-of-one upcycled denim pieces — jackets, jeans, and totes handmade by Donna in Portland, Oregon.";
+  return { title, description, openGraph: { title: `${title} — Donna Upcycles It`, description } };
+}
 
 const PRODUCT_IMAGES = [
   "https://picsum.photos/seed/prod1/600/750",

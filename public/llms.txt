@@ -1,0 +1,54 @@
+# Donna Upcycles It
+
+> One-of-one upcycled denim jackets, jeans, and totes handmade by Donna in Portland, Oregon.
+
+Donna Upcycles It is a small independent shop run by Donna from her kitchen studio in Portland, OR.
+She rescues old denim from thrift stores, estate sales, and skips, then reworks each piece into a
+one-of-a-kind wearable. Every piece is washed twice, inspected, hand-cut, machine-sewn, and signed
+in the inner seam with a drop number. No two pieces are ever the same.
+
+Custom orders are open year-round — customers can bring their own denim or commission a bespoke piece.
+
+## Key pages
+
+- Homepage: https://donnaupcyclesit.com
+- Shop (all products): https://donnaupcyclesit.com/shop
+- Shop by category: https://donnaupcyclesit.com/shop?category=Jackets
+  (also: Jeans, Totes, Other)
+- Journal (sewing tips & behind-the-scenes): https://donnaupcyclesit.com/journal
+- About Donna: https://donnaupcyclesit.com/about
+- Custom orders & contact: https://donnaupcyclesit.com/contact
+- Sitemap: https://donnaupcyclesit.com/sitemap.xml
+
+## Products
+
+Products fall into three categories: Jackets, Jeans, and Totes. Each is priced individually and
+listed with size, fabric, sourcing origin, care instructions, and a description. Status is one of:
+available, sold, or reserved. Each item has a unique slug used in the URL /shop/[slug].
+
+Pricing is in USD. Shipping is free over $80. Returns accepted within 14 days.
+
+## Journal
+
+The journal contains posts by Donna covering sewing tips, new product announcements, behind-the-scenes
+posts from her workshop, and customer stories. Posts are tagged with one of:
+"Sewing tips", "New product", "Behind the scenes", or "Customer stories".
+
+## Custom orders
+
+Donna takes custom orders year-round. Customers can send their own denim (e.g. a grandparent's old
+jeans) or describe a bespoke piece. Process: 50% deposit to start, balance when it ships,
+3–4 weeks from agreed brief to delivery. Contact form: https://donnaupcyclesit.com/contact
+
+## About Donna
+
+Donna is a self-taught denim reworker based in Portland, Oregon. She started with one pair of
+Levi's 501s she couldn't bring herself to throw away. She sources exclusively from thrift stores,
+estate sales, and skips. Her studio is her kitchen table.
+
+## Technical
+
+- Platform: Next.js (App Router) + Sanity CMS + Stripe + Resend
+- Payments: Stripe Checkout (USD, card only)
+- Email: Resend
+- CMS: Sanity Studio at /studio (not publicly accessible to crawlers)

@@ -1,8 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { ArrowIcon, ButterflyIcon } from "@/components/ButterflyIcon";
 import { getJournalPosts, getSiteSettings } from "@/lib/queries";
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ tag?: string }> }): Promise<Metadata> {
+  const { tag } = await searchParams;
+  const title = tag ? `Journal — ${tag}` : "Journal";
+  const description = "Sewing tips, behind-the-scenes from Donna's kitchen workshop, and heads-up posts whenever new denim pieces drop.";
+  return { title, description, openGraph: { title: `${title} — Donna Upcycles It`, description } };
+}
 
 type JournalPost = {
   _id: string;
